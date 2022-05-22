@@ -1,0 +1,4 @@
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+    <a class="dropdown-item" *ngIf="userAddress">{{userAddress}}</a>
+    <a class="dropdown-item" (click)="connectWallet()">{{labelButton}}</a>
+</div>

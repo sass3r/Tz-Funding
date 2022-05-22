@@ -1,0 +1,73 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header indigo">
+                        <h4 class="card-title text">Bring your project</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="projectForm" (ngSubmit)="onSubmit(projectForm.value)">
+                            <div>
+                                <mat-form-field>
+                                    <input matInput type="text" name="name" placeholder="Project Name" formControlName="name">
+                                    <mat-error *ngIf="!getNameForm().valid && projectForm.controls['name'].touched">
+                                        {{errorMessage}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field>
+                                    <textarea matInput name="description" placeholder="Description" formControlName="description"></textarea>
+                                    <mat-error *ngIf="!getDescriptionForm().valid && projectForm.controls['description'].touched">
+                                        {{errorMessage}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field>
+                                    <input matInput type="number" name="amount" placeholder="Amount Needed (XTZ)" formControlName="amount">
+                                    <mat-error *ngIf="!getAmountForm().valid && projectForm.controls['amount'].touched">
+                                        {{errorMessage}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field>
+                                    <textarea matInput name="Objectives" placeholder="Project Objectives" formControlName="objectives"></textarea>
+                                    <mat-error *ngIf="!getObjectivesForm().valid && projectForm.controls['objectives'].touched">
+                                        {{errorMessage}}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div>
+                                <mat-form-field class="example-full-width">
+                                        <input matInput name="submissionDate" placeholder="Progress submission date" type="text" formControlName="submissionDate" [matDatepicker]="myDatepicker">
+                                        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #myDatepicker></mat-datepicker>
+                                        <mat-error *ngIf="!getSubmissionDateForm().valid && projectForm.controls['submissionDate'].touched">
+                                            {{errorMessage}}
+                                        </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div>
+                                <div>
+                                <label for="slideshare">Project image:</label>
+                                </div>
+                                <div>
+                                <input type="file" name="file" id="image" (change)="onFileChange($event)"/>
+                                </div>
+                            </div>
+                
+                            <button mat-raised-button type="submit">Mint Project</button>
+                            <img *ngIf="loading" src="assets/img/loading.gif"/>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

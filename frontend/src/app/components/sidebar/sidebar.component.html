@@ -1,0 +1,34 @@
+<div class="logo">
+    <div class="simple-text">
+        <div class="logo-img">
+            <img src="assets/img/tz.png"/>
+        </div>
+        <span class="brand">funding</span>
+    </div>
+</div>
+<div class="sidebar-wrapper">
+  <div *ngIf="isMobileMenu() && showMenu">
+        <form class="navbar-form">
+        <span class="bmd-form-group">
+        </span>
+        </form>
+        <ul class="nav navbar-nav nav-mobile-menu">
+            <li class="nav-item">
+                <a class="nav-link" (click)="showOptions()" href="javascript:void(0)">
+                    <i class="material-icons">dashboard</i>
+                    <p>
+                        <span class="d-lg-none d-md-block">Menu</span>
+                    </p>
+                </a>
+            </li>
+        </ul>
+  </div>
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let address of addressBook" class="nav-item">
+            <a class="nav-link" (click)="navigate(address.index)">
+                <i class="material-icons">account_balance_wallet</i>
+                <p>{{address.name}}</p>
+            </a>
+        </li>
+    </ul>
+</div>

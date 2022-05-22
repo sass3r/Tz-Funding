@@ -1,0 +1,15 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">   
+            <app-token *ngFor="let project of projects"
+                    [amount]="project.amount" 
+                    [name]="project.name" 
+                    [symbol]="project.symbol" 
+                    [description]="project.description" 
+                    [fundable]="project.collectable" 
+                    [tokenId]="project.token_id" 
+                    [logo]="project.projectLogo">
+            </app-token>
+        </div>
+    </div>
+</div>

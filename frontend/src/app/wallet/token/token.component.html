@@ -1,0 +1,33 @@
+<div class="col-md-10">
+    <div class="card">
+        <div class="card-header card-chart">
+            <div class="ct-chart">
+                <img (click)="show(tokenId)" src="{{logo}}" alt="project logo"/>        
+            </div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">{{name}}</h4>
+            <p class="card-category"> 
+                {{description.length > 15
+                    ? description.slice(0, 45) + "..."
+                    : description}}
+            </p>
+        </div>
+        <div class="card-footer">
+            <div class="card-stats">
+                <div>
+                    <span>Amount to raise:</span>
+                    <span>
+                        {{amount}} XTZ
+                    </span>
+                    <button class="btn btn-info" (click)="fund()">
+                            {{fundable ? "Fund" : "Close"}}
+                    </button>
+                </div>
+                <div>
+                    <span><i class="material-icons">access_time</i></span><span>updated 4 minutes ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

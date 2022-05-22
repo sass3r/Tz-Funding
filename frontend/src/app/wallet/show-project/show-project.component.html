@@ -1,0 +1,26 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <img src="{{projectNft}}" alt="nft">    
+            </div>
+            <div class="col-md-3">
+                <div>
+                    <b>Project Name:</b><pre>{{project.name}}</pre>
+                    <b>Author</b><pre>{{project.author}}</pre>
+                    <b>Holder</b><pre>{{project.holder}}</pre>
+                    <b>Token Id</b><pre>{{project.token_id}}</pre>
+                    <b>Symbol</b><pre>{{project.symbol}}</pre>
+                    <b>PDF</b><pre><a href="{{projectPdf}}" target="_blank">Project Pdf</a></pre>
+                    <b>Amount to raise:</b><pre>{{project.amount/1000000}} XTZ</pre>
+                    <div>
+                        <button class="btn btn-info" (click)="fund()">
+                                {{fundable ? "Fund" : "Close"}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
