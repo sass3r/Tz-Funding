@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService,
   ) {
-    this.contractAddress = "KT1G4jxM8NMLsJGqaeLvxVEw8GZqepw4mx1s";
+    this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di";
     this.tezos = null;
     this.wallet = null;
     this.userAddress = "";
@@ -97,7 +97,7 @@ export class ProjectComponent implements OnInit {
       let formData = new FormData();
       let object: any = {};
       this.name = form['name'];
-      this.amount = form['amount'];
+      this.amount = form['amount'] * 1000000;
       this.description = form['description'];
       this.objectives = form['objectives'];
       this.submissionDate = form['submissionDate'];
@@ -138,6 +138,7 @@ export class ProjectComponent implements OnInit {
             this.loading = false;
             console.log(lenResources);
             lenResources = response.length;
+            this.router.navigateByUrl("catalog");
           }else{
             await this.mintBatch(response);
           }
@@ -202,8 +203,9 @@ export class ProjectComponent implements OnInit {
         const batchOp = await batch.send();
         const confirmation = await batchOp.confirmation();
         console.log(confirmation);
-        this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + batchOp.hash);
+        this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/");
         this.loading = false;
+        this.router.navigateByUrl("catalog");
       }catch(error){
         console.log(error);
       }

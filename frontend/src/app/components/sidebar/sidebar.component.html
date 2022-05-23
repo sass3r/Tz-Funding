@@ -23,12 +23,4 @@
             </li>
         </ul>
   </div>
-    <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let address of addressBook" class="nav-item">
-            <a class="nav-link" (click)="navigate(address.index)">
-                <i class="material-icons">account_balance_wallet</i>
-                <p>{{address.name}}</p>
-            </a>
-        </li>
-    </ul>
 </div>

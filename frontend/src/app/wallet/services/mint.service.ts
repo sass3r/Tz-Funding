@@ -15,7 +15,7 @@ export class MintService {
     private httpClient: HttpClient,
   ) {
       this.resource = '/deploy';
-      this.url = 'http://localhost:8080';
+      this.url = 'https://tz.cryptostore.com.bo';
       this.token = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
   }
 

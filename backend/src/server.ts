@@ -10,8 +10,8 @@ import { arrayBuffer } from "stream/consumers";
 import * as nunjucks from 'nunjucks';
 import * as pdf from 'html-pdf';
 
-const PinataKeys = require("./PinataKeys");
-const fileFormat = require("./utils/fileformat");
+const PinataKeys = require("../PinataKeys");
+const fileFormat = require("../utils/fileformat");
 const cors = require("cors");
 const multer = require("multer");
 const ipfsHost = "https://ipfs.io/ipfs/";
@@ -21,7 +21,7 @@ const app = express();
 const port = 8080;
 const corsOptions = {
     origin: [
-        "http://localhost:4200"
+        "https://tzfunding.cryptostore.com.bo"
     ],
     optionSuccessStatus: 200
 };
@@ -107,7 +107,8 @@ let generateProjectPDF = async (path: string, projectData: any, fileMimeType: st
             let html = nunjucks.render(template, {projectName: projectData.projectName, logo: base64String, description: projectData.description, objectives: projectData.objectives, publishDate: projectData.date, submissionDate: projectData.submissionDate});
             pdf.create(html, options).toFile(pathPdf, (err, res) => {
                 if (err) reject(err);
-                resolve(res.filename);
+                if(res)
+                  resolve(res.filename);
             });
         });
     })
