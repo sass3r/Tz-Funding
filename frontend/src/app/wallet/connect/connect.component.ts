@@ -77,8 +77,6 @@ export class ConnectComponent implements OnInit {
         this.notifyBalance.emit(this.balance);
         this.labelButton = "Disconnect Wallet";
         this.connected = true;
-        console.log(this.userAddress);
-        console.log(this.balance);
       } else {
         this.disconnect();
       }

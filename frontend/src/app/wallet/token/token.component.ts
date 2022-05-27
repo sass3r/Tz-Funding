@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import {FundComponent} from '../fund/fund.component';
 
 @Component({
   selector: 'app-token',
@@ -14,9 +16,13 @@ export class TokenComponent implements OnInit {
   @Input() description: string = "";
   @Input() fundable: boolean = false;
   @Input() tokenId: number = 0;
+  @Input() author: string = "";
 
 
-  constructor(private router: Router) { 
+  constructor(
+    private router: Router,
+    private dialog: MatDialog
+  ) { 
 
   }
 
@@ -26,8 +32,15 @@ export class TokenComponent implements OnInit {
     this.amount = this.amount / 1000000; 
   }
 
-  fund() { 
-
+  fund(token_id: number) {
+    const dialogRef = this.dialog.open(FundComponent, {
+      width: '300px',
+      height: '220px',
+      data: {
+        id: token_id,
+        author: this.author
+      }
+    });
   }
 
   show(id: number) {

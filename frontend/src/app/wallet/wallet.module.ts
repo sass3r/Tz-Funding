@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CatalogComponent } from './catalog/catalog.component';
 import { TokenComponent } from './token/token.component';
 import { ShowProjectComponent } from './show-project/show-project.component';
+import { FundComponent } from './fund/fund.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ShowProjectComponent } from './show-project/show-project.component';
     ProjectComponent,
     CatalogComponent,
     TokenComponent,
-    ShowProjectComponent
+    ShowProjectComponent,
+    FundComponent
   ],
   imports: [
     CommonModule,

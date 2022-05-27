@@ -19,7 +19,7 @@ export class CatalogComponent implements OnInit {
 
   constructor(
     private communicationService: CommunicationService,
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
   ) {
     this.tezos = null;
     this.wallet = null;
@@ -32,19 +32,16 @@ export class CatalogComponent implements OnInit {
       if(change.topic == "setUserAddress") {
         if(change.msg != null){
           this.userAddress = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setTezosToolkit") {
         if(change.msg != null){
           this.tezos = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setWallet") {
         if(change.msg != null){
           this.wallet = change.msg;
-          console.log(change);
         }
       }
     });
@@ -52,7 +49,5 @@ export class CatalogComponent implements OnInit {
       .then((projects: any) => {
         return projects
       })
-    console.log(this.projects);
   }
-
 }

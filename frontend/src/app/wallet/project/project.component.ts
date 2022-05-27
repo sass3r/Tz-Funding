@@ -70,19 +70,16 @@ export class ProjectComponent implements OnInit {
       if(change.topic == "setUserAddress") {
         if(change.msg != null){
           this.userAddress = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setTezosToolkit") {
         if(change.msg != null){
           this.tezos = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setWallet") {
         if(change.msg != null){
           this.wallet = change.msg;
-          console.log(change);
         }
       }
     });
@@ -103,8 +100,6 @@ export class ProjectComponent implements OnInit {
       this.submissionDate = form['submissionDate'];
       this.submissionDate = moment(this.submissionDate).format("YYYY-MM-DD");
       this.date = moment(Date.now()).format("YYYY-MM-DD");
-      console.log('el');
-      console.log(inputEl.files!.item(0));
       formData.append('projectName', this.name);
       formData.append('amount', this.amount+'');
       formData.append('description', this.description);
@@ -116,11 +111,9 @@ export class ProjectComponent implements OnInit {
       formData.forEach((value,key) => {
         object[key] = value;
       });
-      console.log(JSON.stringify(object));
       let projectUpload = await this.mintService.mintProject(formData);
       this.loading = true;
       projectUpload.subscribe(async (success: any) => {
-        console.log(success);
         if(success.status) {
           let response = JSON.parse(success.resources);
           let lenResources = response.length;
@@ -131,12 +124,9 @@ export class ProjectComponent implements OnInit {
           if(lenResources == 1){
             resource = response.pop();
             cid = "ipfs://"+resource.fileMetadata;
-            console.log(cid);
             hash = await this.mint(this.amount,cid);
-            console.log(hash);
             this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + hash);
             this.loading = false;
-            console.log(lenResources);
             lenResources = response.length;
             this.router.navigateByUrl("catalog");
           }else{
@@ -202,7 +192,6 @@ export class ProjectComponent implements OnInit {
         let batch = await this.tezos.wallet.batch(batchList);
         const batchOp = await batch.send();
         const confirmation = await batchOp.confirmation();
-        console.log(confirmation);
         this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/");
         this.loading = false;
         this.router.navigateByUrl("catalog");
@@ -230,10 +219,6 @@ export class ProjectComponent implements OnInit {
 
   getSubmissionDateForm(): FormArray{
     return this.projectForm.get('submissionDate') as FormArray;
-  }
-
-  async submitPhoto() {
-
   }
 
   onFileChange(fileChangeEvent: any) {

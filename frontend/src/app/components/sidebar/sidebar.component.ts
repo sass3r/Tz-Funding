@@ -16,11 +16,14 @@ export const ROUTES: RouteInfo[] = [];
 })
 export class SidebarComponent implements OnInit {
   showMenu = true;
+  connected: boolean;
+  balance: any;
 
   constructor(
     private router: Router,
   ) {
-  
+      this.balance = null;
+      this.connected = false; 
   }
 
   ngOnInit() {
@@ -35,6 +38,15 @@ export class SidebarComponent implements OnInit {
 
   showOptions() {
     this.router.navigateByUrl('display-options');
+  }
+
+  onBalance(balance: any) {
+      if(balance != null){
+          this.balance = balance/1000000;
+          this.connected = true;
+      } else {
+          this.connected = false;
+      }
   }
 
 }

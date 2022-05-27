@@ -13,12 +13,29 @@
         </span>
         </form>
         <ul class="nav navbar-nav nav-mobile-menu">
-            <li class="nav-item">
-                <a class="nav-link" (click)="showOptions()" href="javascript:void(0)">
+            <li *ngIf="connected" class="nav-item">
+                <a class="nav-link" (click)="showOptions()">
                     <i class="material-icons">dashboard</i>
                     <p>
-                        <span class="d-lg-none d-md-block">Menu</span>
+                        <span>Menu</span>
                     </p>
+                </a>
+            </li>
+            <li *ngIf="connected" class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">
+                    <i class="material-icons">generating_tokens</i>
+                    <p>
+                        <span class="d-lg-none d-md-block">{{balance}} XTZ</span>
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuAccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="material-icons">account_balance_wallet</i>
+                    <p>
+                        <span class="d-lg-none d-md-block">Account</span>
+                    </p>
+                    <app-connect (notifyBalance)="onBalance($event)"></app-connect>
                 </a>
             </li>
         </ul>

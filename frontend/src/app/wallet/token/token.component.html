@@ -20,8 +20,8 @@
                     <span>
                         {{amount}} XTZ
                     </span>
-                    <button class="btn btn-info" (click)="fund()">
-                            {{fundable ? "Fund" : "Close"}}
+                    <button class="btn btn-info" (click)="fund(tokenId)">
+                            {{fundable ? "Donate" : "Closed"}}
                     </button>
                 </div>
                 <div>

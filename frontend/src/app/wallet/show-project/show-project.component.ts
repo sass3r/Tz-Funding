@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from '../services/communication.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogService } from '../services/catalog.service';
+import { MatDialog } from '@angular/material/dialog';
+import {FundComponent} from '../fund/fund.component';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-show-project',
@@ -14,6 +18,7 @@ export class ShowProjectComponent implements OnInit {
   private userAddress: any;
   private projects: any;
   private tokenId: number;
+  private contractAddress: string;
   public project: any;
   public projectNft: string;
   public projectPdf: string;
@@ -24,6 +29,8 @@ export class ShowProjectComponent implements OnInit {
     private router: Router,
     private communicationService: CommunicationService,
     private catalogService: CatalogService,
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ) {
     this.tokenId = 0;
     this.tezos = null;
@@ -34,6 +41,7 @@ export class ShowProjectComponent implements OnInit {
     this.projectNft = "";
     this.projectPdf = "";
     this.fundable = false;
+    this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di"
   }
 
   async ngOnInit() {
@@ -42,19 +50,16 @@ export class ShowProjectComponent implements OnInit {
       if(change.topic == "setUserAddress") {
         if(change.msg != null){
           this.userAddress = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setTezosToolkit") {
         if(change.msg != null){
           this.tezos = change.msg;
-          console.log(change);
         }
       }
       if(change.topic == "setWallet") {
         if(change.msg != null){
           this.wallet = change.msg;
-          console.log(change);
         }
       }
     });
@@ -63,17 +68,28 @@ export class ShowProjectComponent implements OnInit {
       return projects
     })
     this.project = this.projects[this.tokenId];
-    console.log(this.project);
     let uriElements = this.project.artifactUri.split("//");
     this.projectNft = "https://gateway.pinata.cloud/ipfs/"+uriElements[1];
-    console.log(this.projectNft);
     uriElements = this.project.projectPdf.split("//");
     this.projectPdf = "https://gateway.pinata.cloud/ipfs/"+uriElements[1];
     this.fundable = this.project.collectable;
   }
 
-  async fund() {
-
+  async collectNFT() {
+    this.communicationService.emitChange({topic: "getUserAddress"});
+    this.communicationService.emitChange({topic: "getTezosToolkit"});
+    this.communicationService.emitChange({topic: "getWallet"});
+    try {
+      this.tezos.setWalletProvider(this.wallet);
+      const contract = await this.tezos.wallet.at(this.contractAddress);
+      const op = await contract.methods
+        .collect(this.tokenId)
+        .send({mutez: true, amount:this.project.amount});
+      await op.confirmation();
+      this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + op.hash);
+    } catch (error) {
+      if(!this.wallet)
+        this.toastr.info("Please connect your wallet");
+    }
   }
-
 }

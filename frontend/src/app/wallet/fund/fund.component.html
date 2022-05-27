@@ -1,0 +1,16 @@
+<h5 mat-dialog-title>Donate to the project</h5>
+<hr>
+<div mat-dialog-content>
+  <form [formGroup]="fundForm" (ngSubmit)="onSubmit(fundForm.value)">
+    <mat-form-field class="example-full-width">
+      <input matInput type="number" name="amount" placeholder="Donate amount" formControlName="amount">
+      <mat-error *ngIf="!getAmountForm().valid && fundForm.controls['amount'].touched">
+        {{errorMessage}}
+      </mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <input type="submit" class="mat-raised-button info"/>
+      <button mat-raised-button mat-dialog-close>Cancel</button>
+    </div>
+  </form>
+</div>

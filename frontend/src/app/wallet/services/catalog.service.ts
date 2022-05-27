@@ -34,20 +34,15 @@ export class CatalogService {
       let responseContract  = await queryContract.toPromise().then((response: any[]) => { return response});
       let responseToken  = await queryToken.toPromise().then((response: any[]) => { return response});
 
-      console.log(responseContract);
-      console.log(responseToken);
 
       let tokenData = [];
       for(let i = 0; i<responseContract.length; i++){
         const metadataToken = bytes2Char(responseToken[i].value.token_info[""]);
-        console.log(metadataToken);
         const elements = metadataToken.split("//")
         const cid = elements[1];
         const httpUri = "https://ipfs.io/ipfs/"+cid;
-        console.log(httpUri);
         const metadataRequest = this.httpClient.get<any>(httpUri);
         const responseMetadata = await metadataRequest.toPromise().then((response: any) => {return response});
-        console.log(responseMetadata);
         const financialData = responseContract[i].value;
         const projectMetadata = responseMetadata;
         tokenData[i] = {

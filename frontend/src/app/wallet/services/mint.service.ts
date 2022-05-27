@@ -21,12 +21,7 @@ export class MintService {
 
   async mintProject(formData: any) {
     let url = this.url + this.resource;
-    let httpOptions = {
-      /*headers: new HttpHeaders({ 
-        'Authorization': `Bearer ${this.token}`,
-      }),
-      withCredentials: true,*/
-    };
+    let httpOptions = {};
     console.log("Sending project");
     console.log(formData);
     return await this.httpClient.post<any>(url,formData,httpOptions);
