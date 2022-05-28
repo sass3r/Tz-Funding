@@ -19,3 +19,7 @@ Smart contracts: SmartPy, CameLIGO
 Blockchain: Tezos
 
 Network: Ithacanet
+
+### Project Architecture
+
+![project_architecture](http://200.58.83.81:3000/wp-images/tzfunding_architecture.png)
