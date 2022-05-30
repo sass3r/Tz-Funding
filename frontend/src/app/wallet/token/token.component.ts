@@ -33,14 +33,16 @@ export class TokenComponent implements OnInit {
   }
 
   fund(token_id: number) {
-    const dialogRef = this.dialog.open(FundComponent, {
-      width: '300px',
-      height: '220px',
-      data: {
-        id: token_id,
-        author: this.author
-      }
-    });
+    if(this.fundable) {
+      const dialogRef = this.dialog.open(FundComponent, {
+        width: '300px',
+        height: '220px',
+        data: {
+          id: token_id,
+          author: this.author
+        }
+      });
+    }
   }
 
   show(id: number) {

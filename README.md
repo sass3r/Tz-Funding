@@ -2,7 +2,7 @@
 
 Tz Funding is a crowdfunding descentralized application for Tezos blockchain.
 It allows entrepreneurs to obtain financing from project proposals written in pdf documents.
-Next, they are transformed into images and NTFs are created.
+Next, they are transformed into images and NFTs are created.
 Investors who trust the project get non-fungible tokens that represent the investment made.
 
 ### Project site

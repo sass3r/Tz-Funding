@@ -76,20 +76,22 @@ export class ShowProjectComponent implements OnInit {
   }
 
   async collectNFT() {
-    this.communicationService.emitChange({topic: "getUserAddress"});
-    this.communicationService.emitChange({topic: "getTezosToolkit"});
-    this.communicationService.emitChange({topic: "getWallet"});
-    try {
-      this.tezos.setWalletProvider(this.wallet);
-      const contract = await this.tezos.wallet.at(this.contractAddress);
-      const op = await contract.methods
-        .collect(this.tokenId)
-        .send({mutez: true, amount:this.project.amount});
-      await op.confirmation();
-      this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + op.hash);
-    } catch (error) {
-      if(!this.wallet)
-        this.toastr.info("Please connect your wallet");
+    if(this.fundable) {
+      this.communicationService.emitChange({topic: "getUserAddress"});
+      this.communicationService.emitChange({topic: "getTezosToolkit"});
+      this.communicationService.emitChange({topic: "getWallet"});
+      try {
+        this.tezos.setWalletProvider(this.wallet);
+        const contract = await this.tezos.wallet.at(this.contractAddress);
+        const op = await contract.methods
+          .collect(this.tokenId)
+          .send({mutez: true, amount:this.project.amount});
+        await op.confirmation();
+        this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + op.hash);
+      } catch (error) {
+        if(!this.wallet)
+          this.toastr.info("Please connect your wallet");
+      }
     }
   }
 }
