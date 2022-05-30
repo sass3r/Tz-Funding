@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { StringLiteral } from '@taquito/michel-codec';
 import { bytes2Char } from '@taquito/utils';
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,8 @@ export class CatalogService {
   constructor(
     private httpClient: HttpClient
   ) {
-    this.tokenAddress = "KT1L6KVvTa3YqZRrkBXJdEzKCznU61wjwHSo";
-    this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di";
+    this.tokenAddress = "KT1C8QeB7pKFQxHGjhmiBqVsuawuK9g8pwtv";
+    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2";
     this.url = "https://api.ithacanet.tzkt.io/v1/contracts/";
     this.tokenQuery = "/bigmaps/token_metadata/keys";
     this.contractQuery = "/bigmaps/data/keys";
@@ -40,7 +39,7 @@ export class CatalogService {
         const metadataToken = bytes2Char(responseToken[i].value.token_info[""]);
         const elements = metadataToken.split("//")
         const cid = elements[1];
-        const httpUri = "https://ipfs.io/ipfs/"+cid;
+        const httpUri = "https://ipfs.cryptostore.com.bo/ipfs/"+cid;
         const metadataRequest = this.httpClient.get<any>(httpUri);
         const responseMetadata = await metadataRequest.toPromise().then((response: any) => {return response});
         const financialData = responseContract[i].value;

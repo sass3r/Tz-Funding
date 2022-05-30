@@ -26,7 +26,7 @@ export class FundComponent implements OnInit {
     private communicationService: CommunicationService,
     @Inject(MAT_DIALOG_DATA) public data: FundModalPayload
   ) { 
-      this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di";
+      this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2";
       this.tezos = null;
       this.wallet = null;
       this.userAddress = ""; 

@@ -41,7 +41,7 @@ export class ShowProjectComponent implements OnInit {
     this.projectNft = "";
     this.projectPdf = "";
     this.fundable = false;
-    this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di"
+    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2"
   }
 
   async ngOnInit() {
@@ -69,9 +69,9 @@ export class ShowProjectComponent implements OnInit {
     })
     this.project = this.projects[this.tokenId];
     let uriElements = this.project.artifactUri.split("//");
-    this.projectNft = "https://gateway.pinata.cloud/ipfs/"+uriElements[1];
+    this.projectNft = "https://ipfs.cryptostore.com.bo/ipfs/"+uriElements[1];
     uriElements = this.project.projectPdf.split("//");
-    this.projectPdf = "https://gateway.pinata.cloud/ipfs/"+uriElements[1];
+    this.projectPdf = "https://ipfs.cryptostore.com.bo/ipfs/"+uriElements[1];
     this.fundable = this.project.collectable;
   }
 

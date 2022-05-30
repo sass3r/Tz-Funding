@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService,
   ) {
-    this.contractAddress = "KT1MY9NuNgjVW3ssUUFSgvsgH7LKLvppR6di";
+    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2";
     this.tezos = null;
     this.wallet = null;
     this.userAddress = "";

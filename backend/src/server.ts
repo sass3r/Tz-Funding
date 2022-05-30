@@ -1,5 +1,6 @@
 import express from "express";
 import pinataSDK from "@pinata/sdk";
+import { create } from "ipfs-http-client";
 import fs, { promises } from "fs";
 import { TezosToolkit } from "@taquito/taquito";
 import { bytes2Char, char2Bytes } from "@taquito/utils";
@@ -14,7 +15,6 @@ const PinataKeys = require("../PinataKeys");
 const fileFormat = require("../utils/fileformat");
 const cors = require("cors");
 const multer = require("multer");
-const ipfsHost = "https://ipfs.io/ipfs/";
 const Tezos = new TezosToolkit("https://ithacanet.cryptostore.com.bo/");
 let imgAddress: any = [];
 const app = express();
@@ -26,7 +26,8 @@ const corsOptions = {
     optionSuccessStatus: 200
 };
 const upload = multer({ dest: "uploads/" });
-const pinata = pinataSDK(PinataKeys.apiKey, PinataKeys.apiSecret); 
+const pinata = pinataSDK(PinataKeys.apiKey, PinataKeys.apiSecret);
+const clientIpfs = create({url: "https://ipfs.cryptostore.com.bo/api/v0"});
 
 app.use(cors(corsOptions));
 app.use(express.json({limit: "50mb"}));
@@ -129,14 +130,14 @@ let processPDF = async (path: string) => {
 let pinFilesToIpfs = async (logoPath: string,pdfProjectPath: string,pdfImages: any[],data: any) => {
     return new Promise<any[]>(async (resolve: any, reject: any) => {
         let filesIpfs: any = [];
-        let logoIpfs: any = await uploadIpfs(logoPath,data,false);
-        let pdfIpfs: any = await uploadIpfs(pdfProjectPath,data,false);
+        let logoIpfs: any = await uploadIpfsServer(logoPath,data,false);
+        let pdfIpfs: any = await uploadIpfsServer(pdfProjectPath,data,false);
         data['logoCid'] = logoIpfs.fileHash;
         data['pdfCid'] = pdfIpfs.fileHash;
         let lenPdfImages = pdfImages.length;
         while (lenPdfImages > 0){
             let pdfImagePath: any = pdfImages.pop();
-            let pdfImageIpfs: any = await uploadIpfs(pdfImagePath, data,true);
+            let pdfImageIpfs: any = await uploadIpfsServer(pdfImagePath, data,true);
             let ipfsData = {
                 file: pdfImageIpfs.fileHash,
                 fileMetadata: pdfImageIpfs.metadataHash
@@ -173,7 +174,7 @@ let uploadIpfs = async (image: any, data: any, isNft: boolean) => {
                             displayUri: `ipfs://${pinnedFile.IpfsHash}`,
                             creators: [data.creator],
                             decimals: 0,
-                            thumbnailUri: `https://ipfs.io/ipfs/${pinnedFile.IpfsHash}`,
+                            thumbnailUri: `ipfs://${pinnedFile.IpfsHash}`,
                             is_transferable: true,
                             shouldPreferSymbol: false
                         };
@@ -189,7 +190,6 @@ let uploadIpfs = async (image: any, data: any, isNft: boolean) => {
                         });
 
                         if (pinnedMetadata.IpfsHash && pinnedMetadata.PinSize > 0) {
-                            let ipfsUrl = ipfsHost + pinnedFile.IpfsHash;
                             let owner = data.creator;
                             let pinned = {
                                 fileHash: pinnedFile.IpfsHash,
@@ -203,3 +203,48 @@ let uploadIpfs = async (image: any, data: any, isNft: boolean) => {
                 }
     });
 }
+
+let uploadIpfsServer = async (image: any, data: any, isNft: boolean) => {
+    return new Promise(async (resolve: any) => {
+            try{
+                    const readableStreamForFile = fs.createReadStream(image);
+                    const pinnedFile = await clientIpfs.add(readableStreamForFile);
+                    const pinnedPath = pinnedFile.path;
+                    if (pinnedPath.length > 0 ) {
+                        console.log("first success: " + pinnedPath);
+                        let metadata: any = {
+                            name: data.projectName,
+                            description: data.description,
+                            symbol: "TZS",
+                            artifactUri: `ipfs://${pinnedFile.path}`,
+                            displayUri: `ipfs://${pinnedFile.path}`,
+                            creators: [data.creator],
+                            decimals: 0,
+                            thumbnailUri: `ipfs://${pinnedFile.path}`,
+                            is_transferable: true,
+                            shouldPreferSymbol: false
+                        };
+                        if(isNft){
+                           metadata['projectLogo'] = "ipfs://"+data.logoCid;
+                           metadata['projectPdf'] = "ipfs://"+data.pdfCid;
+                        }
+
+                        const pinnedMetadata = await clientIpfs.add(JSON.stringify(metadata));
+                        const metadataPath = pinnedMetadata.path; 
+                        if (metadataPath.length > 0) {
+                            console.log("second success: " + metadataPath);
+                            let owner = data.creator;
+                            let pinned = {
+                                fileHash: pinnedFile.path,
+                                metadataHash: pinnedMetadata.path 
+                            }
+                            console.log(pinned);
+                            resolve(pinned);
+                        }
+                    }
+                } catch(err) {
+                    console.log(err);
+                }
+    });
+}
+

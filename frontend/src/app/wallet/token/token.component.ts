@@ -28,7 +28,7 @@ export class TokenComponent implements OnInit {
 
   ngOnInit(): void {
     let elements = this.logo.split("//");
-    this.logo = "https://gateway.pinata.cloud/ipfs/"+elements[1];
+    this.logo = "https://ipfs.cryptostore.com.bo/ipfs/"+elements[1];
     this.amount = this.amount / 1000000; 
   }
 
