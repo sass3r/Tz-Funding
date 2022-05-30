@@ -211,7 +211,6 @@ let uploadIpfsServer = async (image: any, data: any, isNft: boolean) => {
                     const pinnedFile = await clientIpfs.add(readableStreamForFile);
                     const pinnedPath = pinnedFile.path;
                     if (pinnedPath.length > 0 ) {
-                        console.log("first success: " + pinnedPath);
                         let metadata: any = {
                             name: data.projectName,
                             description: data.description,
@@ -232,13 +231,11 @@ let uploadIpfsServer = async (image: any, data: any, isNft: boolean) => {
                         const pinnedMetadata = await clientIpfs.add(JSON.stringify(metadata));
                         const metadataPath = pinnedMetadata.path; 
                         if (metadataPath.length > 0) {
-                            console.log("second success: " + metadataPath);
                             let owner = data.creator;
                             let pinned = {
                                 fileHash: pinnedFile.path,
                                 metadataHash: pinnedMetadata.path 
                             }
-                            console.log(pinned);
                             resolve(pinned);
                         }
                     }
