@@ -14,9 +14,9 @@ export class CatalogService {
   constructor(
     private httpClient: HttpClient
   ) {
-    this.tokenAddress = "KT1C8QeB7pKFQxHGjhmiBqVsuawuK9g8pwtv";
-    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2";
-    this.url = "https://api.ithacanet.tzkt.io/v1/contracts/";
+    this.tokenAddress = "KT1JBtx15CcCqPK3h4d3GxNNSrxB866ZBPVb";
+    this.contractAddress = "KT1HLBVzNXthbyjpWNazZBdEGZuHJbPjN68E";
+    this.url = "https://api.jakartanet.tzkt.io/v1/contracts/";
     this.tokenQuery = "/bigmaps/token_metadata/keys";
     this.contractQuery = "/bigmaps/data/keys";
   }

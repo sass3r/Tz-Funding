@@ -27,7 +27,7 @@ export class ConnectComponent implements OnInit {
     this.wallet = null;
     this.userAddress = null;
     this.balance = null;
-    this.tezos = new TezosToolkit("https://ithacanet.cryptostore.com.bo");
+    this.tezos = new TezosToolkit("https://jakartanet.cryptostore.com.bo");
     this.labelButton = "Connect Wallet";
     this.connected = false;
   }
@@ -50,7 +50,7 @@ export class ConnectComponent implements OnInit {
     if(!this.wallet) {
       this.wallet = new BeaconWallet({
         name: "Tz Funding",
-        preferredNetwork: NetworkType.ITHACANET,
+        preferredNetwork: NetworkType.JAKARTANET,
       });
     }
     this.tezos.setWalletProvider(this.wallet);
@@ -68,8 +68,8 @@ export class ConnectComponent implements OnInit {
           await this.createWallet();
         await this.wallet.requestPermissions({
           network: {
-            type: NetworkType.ITHACANET,
-            rpcUrl: "https://ithacanet.cryptostore.com.bo"
+            type: NetworkType.JAKARTANET,
+            rpcUrl: "https://jakartanet.cryptostore.com.bo"
           }
         });
         this.userAddress = await this.wallet.getPKH();

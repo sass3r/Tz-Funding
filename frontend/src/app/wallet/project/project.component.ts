@@ -42,7 +42,7 @@ export class ProjectComponent implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService,
   ) {
-    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2";
+    this.contractAddress = "KT1HLBVzNXthbyjpWNazZBdEGZuHJbPjN68E";
     this.tezos = null;
     this.wallet = null;
     this.userAddress = "";
@@ -125,7 +125,7 @@ export class ProjectComponent implements OnInit {
             resource = response.pop();
             cid = "ipfs://"+resource.fileMetadata;
             hash = await this.mint(this.amount,cid);
-            this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + hash);
+            this.toastr.info("Success view in block explorer: https://jakartanet.tzkt.io/" + hash);
             this.loading = false;
             lenResources = response.length;
             this.router.navigateByUrl("catalog");
@@ -192,7 +192,7 @@ export class ProjectComponent implements OnInit {
         let batch = await this.tezos.wallet.batch(batchList);
         const batchOp = await batch.send();
         const confirmation = await batchOp.confirmation();
-        this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/");
+        this.toastr.info("Success view in block explorer: https://jakartanet.tzkt.io/");
         this.loading = false;
         this.router.navigateByUrl("catalog");
       }catch(error){

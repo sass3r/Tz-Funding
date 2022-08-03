@@ -41,7 +41,7 @@ export class ShowProjectComponent implements OnInit {
     this.projectNft = "";
     this.projectPdf = "";
     this.fundable = false;
-    this.contractAddress = "KT1JbobmwQDhozgyLDuQWnJqN6idYLd4tGL2"
+    this.contractAddress = "KT1HLBVzNXthbyjpWNazZBdEGZuHJbPjN68E"
   }
 
   async ngOnInit() {
@@ -87,7 +87,7 @@ export class ShowProjectComponent implements OnInit {
           .collect(this.tokenId)
           .send({mutez: true, amount:this.project.amount});
         await op.confirmation();
-        this.toastr.info("Success view in block explorer: https://ithacanet.tzkt.io/" + op.hash);
+        this.toastr.info("Success view in block explorer: https://jakartanet.tzkt.io/" + op.hash);
       } catch (error) {
         if(!this.wallet)
           this.toastr.info("Please connect your wallet");
